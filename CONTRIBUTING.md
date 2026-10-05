@@ -18,3 +18,7 @@ Do not include HA credentials, private instance URLs, household history, or sens
 Read the [development guide](docs/development.md) and [security notes](docs/security-and-limits.md). Keep changes focused. Explain the problem and new behavior, include meaningful validation, and preserve per-user and per-installation boundaries. Add a new generated migration for storage changes.
 
 Run TypeScript and the existing security suite before proposing a change. Do not add tests that only restate the implementation.
+
+## Contribution licensing
+
+Original contributions are accepted under the project’s [Unlicense](UNLICENSE). For substantial original patches, state that you dedicate your copyright interest in the contribution to the public domain. Do not submit code you cannot contribute on those terms. Preserve all notices for third-party material.

@@ -8,7 +8,7 @@ Home Assistant Workbench is an independent ChatGPT plugin with a connection mana
 
 [Getting started](#use-it-in-your-own-chatgpt-account) · [Example requests](#what-can-i-ask) · [User guide](docs/user-guide.md) · [Development](docs/development.md) · [Feedback & issues](#feedback)
 
-> **Current availability:** the source is shared through this repository. The maintainer’s [hosted Workbench](https://home-assistant-workbench.nickfost.chatgpt.site) and its plugin currently have private access. A public GitHub repository does not give access to that hosted copy. Deploy your own private copy using the prompt below, or install a copy explicitly shared with you. This is not a publicly listed, one-click ChatGPT plugin yet.
+> **Current availability:** the source is shared through this repository. The maintainer’s [hosted Workbench](https://home-assistant-workbench.nickfost.chatgpt.site) and its plugin currently have private access. A public GitHub repository does not give access to that hosted copy. Deploy your own private copy using the prompt below, or install a copy explicitly shared with you. Public directory submission is being prepared; this is not a publicly listed, one-click ChatGPT plugin yet. See the [publication status](docs/submission/readiness.md).
 
 ## What can it do?
 
@@ -22,7 +22,7 @@ Home Assistant Workbench is an independent ChatGPT plugin with a connection mana
 
 **It needs a public HTTPS hostname on port 443**, such as a Nabu Casa remote URL. This hosted implementation cannot reach LAN IPs, `.local` names, or a private VPN. It does not configure network exposure for you.
 
-History/logbook queries are [planned in issue #1](https://github.com/Nickfost/home-assistant-workbench/issues/1). Direct YAML/file editing and installing HACS components or add-ons are not implemented. See [security and limits](docs/security-and-limits.md).
+History/logbook queries are [planned in issue #1](https://github.com/RandomDevelopment/home-assistant-workbench/issues/1). Direct YAML/file editing and installing HACS components or add-ons are not implemented. See [security and limits](docs/security-and-limits.md).
 
 ## Use it in your own ChatGPT account
 
@@ -32,7 +32,7 @@ In ChatGPT Work or Codex, install **Plugin Creator**, **Sites**, and a way to ac
 
 ```text
 Create my own private Home Assistant Workbench using the source at
-https://github.com/Nickfost/home-assistant-workbench.
+https://github.com/RandomDevelopment/home-assistant-workbench.
 
 Read its README, user guide, development guide, and security notes first.
 Use Plugin Creator and Sites to deploy a NEW private Site and its provisioned
@@ -115,9 +115,9 @@ household history, and show me the tracking ID.
 
 ## Feedback
 
-Open **Feedback** in your connection manager, or ask the installed plugin to submit a report. You receive a tracking ID and can check status and maintainer replies. Feedback stays in that deployed copy’s inbox; it is not automatically sent to this repository. Your copy’s maintainer can link a separately created GitHub issue.
+Open **Feedback** in your connection manager, or ask the installed plugin to submit a report. You receive a tracking ID and can check status and maintainer replies. Feedback stays in that deployed copy’s inbox; it is not automatically sent to this repository. Your copy’s maintainer can link a separately created GitHub issue. Feedback expires 90 days after submission; you can delete your own report and reply sooner. Expired rows are purged on feedback access. Daily background cleanup requires a verified maintainer connection and an enabled schedule.
 
-If you prefer GitHub, [open an issue](https://github.com/Nickfost/home-assistant-workbench/issues/new/choose). Describe your expected result, actual result, and versions. Leave out credentials, private URLs, household history, and sensitive logs. See [CONTRIBUTING.md](CONTRIBUTING.md).
+If you prefer GitHub, [open an issue](https://github.com/RandomDevelopment/home-assistant-workbench/issues/new/choose). Describe your expected result, actual result, and versions. Leave out credentials, private URLs, household history, and sensitive logs. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## For developers
 
@@ -131,3 +131,7 @@ React / Vinext on Cloudflare Workers, with D1 persistence and a stateless MCP en
 Source entry points: `app/page.tsx` (connection manager), `app/mcp/route.ts` (MCP), `lib/ha/` (Home Assistant and feedback operations), and `db/schema.ts` / `drizzle/` (versioned storage).
 
 Independent project. Not affiliated with Home Assistant, HACS, or OpenAI.
+
+## License
+
+Original Workbench contributions use [the Unlicense](UNLICENSE), allowing reuse without attribution. Bundled third-party material keeps its original terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
