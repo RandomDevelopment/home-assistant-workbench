@@ -25,6 +25,7 @@ cd home-assistant-workbench
 corepack pnpm install --frozen-lockfile
 node node_modules/typescript/bin/tsc --noEmit
 node tests/security.mjs
+node tests/history.mjs
 ```
 
 The D1/Miniflare suite covers multiple installations, tenant boundaries, encrypted credential binding, single-use actions, URL/DNS controls, redaction, feedback isolation, maintainer authorization, idempotent submission retries and submission limits. It does not establish connectivity to a real Home Assistant installation.

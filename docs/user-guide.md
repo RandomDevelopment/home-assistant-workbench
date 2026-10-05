@@ -53,7 +53,7 @@
 
 ## Send a feature request
 
-**Goal:** Ask for history queries without connecting GitHub.
+**Goal:** Suggest an improvement without connecting GitHub.
 
 1. Open **Feedback**. You do not need a connected Home Assistant installation.
 2. Choose **Feature request**, add a title and details, and optionally include an owned installation’s ID and known Core version.
@@ -62,9 +62,20 @@
 
 **Success:** Your report is in your copy’s feedback inbox. Other users cannot read it. Only that copy’s configured maintainer can review the whole inbox. The maintainer may create and link a GitHub issue separately; feedback is not automatically posted publicly.
 
+## Check a phone’s recorded room history
+
+**Goal:** Find the last recorded upstairs observation during a specific period.
+
+1. Name the installation, such as Home, and ask for the last six hours.
+2. Workbench resolves the exact room sensor and recorded state value. It uses Home’s time zone to turn the period into explicit start/end timestamps.
+3. It queries recorder history, follows pages, and distinguishes state changes, initial boundary observations, and attribute updates.
+4. The answer includes the queried range, time zone, and actual evidence. A boundary observation does not establish when the phone entered a room; empty data does not prove it never moved.
+5. For a related event, ask for that entity’s logbook over the same period. Deleted entities can retain history, but logbook access requires a currently readable entity.
+
+**Success:** A recorded answer with clear coverage and missing-data limits, without changing Home Assistant or publishing private history. See the [history guide](history.md).
+
 ## What is still outside scope?
 
-- Historical recorder/logbook queries: planned in upstream issue #1.
 - Direct YAML/file changes, SSH, or installing integrations/add-ons: unsupported.
 - LAN-only addresses: not reachable by this hosted implementation.
 
