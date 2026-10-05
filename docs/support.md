@@ -4,6 +4,8 @@ Home Assistant Workbench is an independent project from **Random Development**. 
 
 Describe what you tried, what you expected, what happened, relevant versions, and steps to reproduce. Public issue text is visible to everyone. Leave out tokens, passwords, private URLs, addresses, household history, and sensitive logs.
 
+For private security or data-deletion requests, contact **services@randomdevelopment.biz**. Include enough non-sensitive context to identify the deployed copy; never send Home Assistant credentials. General setup questions belong in GitHub issues or the built-in Feedback form.
+
 ## Send feedback without GitHub
 
 If you can access a deployed Workbench copy, open **Feedback** in its connection manager or ask its installed plugin to submit a report. You receive a tracking ID and can check status and maintainer replies. No GitHub account or connected Home Assistant installation is required. Each deployed copy's reports go to that copy's configured maintainer; they are not automatically posted to this repository.
