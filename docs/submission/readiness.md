@@ -2,7 +2,7 @@
 
 Status: **preparation in progress; not uploaded, submitted, approved, or published in the public plugin directory**.
 
-The confirmed legal publisher is **Random Development LLC**, with its normal mailing address recorded in the privacy and terms drafts (business verification not yet checked), targeting **all available countries**, with **no payments or purchases**. The full source is now public at [RandomDevelopment/home-assistant-workbench](https://github.com/RandomDevelopment/home-assistant-workbench). Repository ownership has moved to RandomDevelopment. This does not change the hosted Site’s private audience or publish the plugin in the ChatGPT directory.
+The confirmed legal publisher is **Random Development LLC**, with business verification not yet checked, targeting **all available countries**, with **no payments or purchases**. The full source is now public at [RandomDevelopment/home-assistant-workbench](https://github.com/RandomDevelopment/home-assistant-workbench). Repository ownership has moved to RandomDevelopment. This does not change the hosted Site’s private audience or publish the plugin in the ChatGPT directory.
 
 ## Prepared
 
