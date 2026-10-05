@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { AppError } from './security';
 export function db(){if(!env.DB)throw new AppError('Connection storage is temporarily unavailable.',503);return env.DB;}
-export function settings(){return env as unknown as {CREDENTIAL_KEY?:string;APP_ORIGIN?:string};}
+export function settings(){return env as unknown as {CREDENTIAL_KEY?:string;APP_ORIGIN?:string;FEEDBACK_MAINTAINER_ID?:string};}
 export type Installation={id:string;owner:string;name:string;url:string;secret:string|null;mode:string;notes:string;snapshot:string|null;checked_at:number|null;created_at:number};
 export async function owned(owner:string,id:string){const row=await db().prepare('SELECT * FROM installations WHERE owner=? AND id=?').bind(owner,id).first<Installation>();if(!row)throw new AppError('Installation not found.',404);return row;}
 export async function list(owner:string){return (await db().prepare('SELECT id,name,url,mode,notes,checked_at,snapshot,secret IS NOT NULL AS connected FROM installations WHERE owner=? ORDER BY created_at').bind(owner).all()).results.map(r=>({...r,snapshot:r.snapshot?JSON.parse(String(r.snapshot)):null}));}
