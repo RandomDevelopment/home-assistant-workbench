@@ -1,0 +1,74 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+import { readFile, mkdir, rm } from 'node:fs/promises';
+const req=createRequire(import.meta.url);
+const wranglerReq=createRequire(req.resolve('wrangler/package.json'));
+const {build}=await import(wranglerReq.resolve('esbuild'));
+const {Miniflare}=await import(wranglerReq.resolve('miniflare'));
+await mkdir('.test',{recursive:true});
+await build({entryPoints:['tests/harness.ts'],bundle:true,format:'esm',platform:'browser',target:'es2022',external:['cloudflare:workers','node:*'],outfile:'.test/harness.mjs'});
+const mf=new Miniflare({modules:true,scriptPath:'.test/harness.mjs',compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],d1Databases:['DB'],bindings:{CREDENTIAL_KEY:Buffer.alloc(32,7).toString('base64'),APP_ORIGIN:'https://test.example.com',FEEDBACK_MAINTAINER_ID:'alice'}});
+let checks=0;
+async function call(a){const r=await mf.dispatchFetch('https://test.example.com',{method:'POST',body:JSON.stringify(a)});const v=await r.json();return {status:r.status,...v};}
+async function ok(a){const r=await call(a);assert.equal(r.status,200,r.error);checks++;return r.value;}
+async function bad(a){const r=await call(a);assert.equal(r.status,400);checks++;return r;}
+try{
+ for(const file of ['drizzle/0000_wealthy_doctor_faustus.sql','drizzle/0001_useful_exodus.sql']){const sql=await readFile(file,'utf8');for(const s of sql.split('--> statement-breakpoint').filter(x=>x.trim()))await ok({action:'sql',sql:s});}
+ for(let n=0;n<12;n++)await ok({action:'sql',sql:'INSERT INTO installations (id,owner,name,url,created_at) VALUES (?,?,?,?,?)',bind:['a'+n,'alice','Home '+n,'https://home'+n+'.example.com',n]});
+ await ok({action:'sql',sql:'INSERT INTO installations (id,owner,name,url,created_at) VALUES (?,?,?,?,?)',bind:['b0','bob','Bob Home','https://bob.example.com',0]});
+ assert.equal((await ok({action:'list',owner:'alice'})).length,12);
+ assert.equal((await ok({action:'list',owner:'bob'})).length,1);
+ await bad({action:'owned',owner:'bob',id:'a0'});await bad({action:'operation',owner:'bob',name:'list_components',args:{installation_id:'a0'}});
+ await bad({action:'operation',owner:'alice',name:'inspect_installation',args:{}});
+ const encrypted=await ok({action:'encrypt',owner:'alice',id:'a0',value:{access_token:'test-sensitive'}});assert(!encrypted.includes('test-sensitive'));assert.deepEqual(await ok({action:'decrypt',owner:'alice',id:'a0',value:encrypted}),{access_token:'test-sensitive'});
+ await bad({action:'decrypt',owner:'bob',id:'a0',value:encrypted});await bad({action:'decrypt',owner:'alice',id:'a1',value:encrypted});
+ await bad({action:'operation',owner:'alice',name:'execute_change',args:{installation_id:'a0',change_id:'anything'}});
+ await ok({action:'sql',sql:'UPDATE installations SET mode=? WHERE id=?',bind:['write','a0']});
+ await ok({action:'sql',sql:'INSERT INTO changes (id,owner,installation,payload,expires_at) VALUES (?,?,?,?,?)',bind:['draft','alice','a0','{}',Date.now()+600000]});
+ await bad({action:'operation',owner:'alice',name:'execute_change',args:{installation_id:'a1',change_id:'draft'}});
+ await bad({action:'operation',owner:'bob',name:'execute_change',args:{installation_id:'a0',change_id:'draft'}});
+ await bad({action:'operation',owner:'alice',name:'execute_change',args:{installation_id:'a0',change_id:'draft'}});
+ const claimed=await ok({action:'sql',sql:'SELECT claimed_at FROM changes WHERE id=?',bind:['draft']});assert(claimed.results[0].claimed_at>0);
+ await bad({action:'operation',owner:'alice',name:'execute_change',args:{installation_id:'a0',change_id:'draft'}});
+ for(const url of ['http://home.example.com','https://127.0.0.1','https://2130706433','https://0x7f000001','https://[::1]','https://user:pass@home.example.com','https://home.local','https://home.example.com:8123','https://home.example.com/path','https://home.example.com/?token=foo'])await bad({action:'instance',url});
+ assert.equal(await ok({action:'instance',url:'https://HOME.example.com/'}),'https://home.example.com');
+ for(const ip of ['127.0.0.1','10.0.0.1','169.254.169.254','192.168.1.1','172.16.0.1','100.64.0.1','::1','fc00::1','::ffff:127.0.0.1'])assert.equal(await ok({action:'ip',ip}),false);
+ assert.equal(await ok({action:'ip',ip:'8.8.8.8'}),true);assert.equal(await ok({action:'ip',ip:'2606:4700::1111'}),true);
+ await bad({action:'dns',answers:[{type:1,data:'8.8.8.8'},{type:1,data:'127.0.0.1'}]});await bad({action:'dns',answers:[]});await ok({action:'dns',answers:[{type:1,data:'8.8.8.8'}]});
+ await bad({action:'redirect',code:302});assert.equal(await ok({action:'redirect',code:200}),200);
+ assert.deepEqual(await ok({action:'redact',value:{token:'secret',data:{password:'secret',entity_id:'light.office'},log:'Bearer abc'}}),{token:'[redacted]',data:{password:'[redacted]',entity_id:'light.office'},log:'Bearer [redacted]'});
+ const feedbackId='11111111-1111-4111-8111-111111111111';
+ const feedbackArgs={submission_id:feedbackId,kind:'feature',title:'History queries',details:'Support bounded history. Bearer sample-secret'};
+ const first=await ok({action:'operation',owner:'bob',name:'submit_feedback',args:feedbackArgs});assert(!first.feedback.details.includes('sample-secret'));
+ assert.equal((await ok({action:'operation',owner:'bob',name:'submit_feedback',args:feedbackArgs})).duplicate,true);
+ assert.equal((await ok({action:'operation',owner:'alice',name:'list_feedback',args:{}})).items.length,0);
+ assert.equal((await ok({action:'operation',owner:'bob',name:'list_feedback',args:{}})).items.length,1);
+ await bad({action:'operation',owner:'bob',name:'review_feedback',args:{}});
+ await bad({action:'operation',owner:'bob',name:'update_feedback',args:{submission_id:feedbackId,status:'resolved'}});
+ const inbox=await ok({action:'operation',owner:'alice',name:'review_feedback',args:{}});assert.equal(inbox.items[0].id,feedbackId);assert(!('owner' in inbox.items[0]));
+ await bad({action:'operation',owner:'bob',name:'submit_feedback',args:{...feedbackArgs,submission_id:'22222222-2222-4222-8222-222222222222',installation_id:'a0'}});
+ await bad({action:'operation',owner:'bob',name:'submit_feedback',args:{...feedbackArgs,submission_id:'invalid'}});
+ await bad({action:'operation',owner:'bob',name:'submit_feedback',args:{...feedbackArgs,title:'x'.repeat(161)}});
+ await bad({action:'operation',owner:'alice',name:'update_feedback',args:{submission_id:feedbackId,status:'resolved',issue_url:'https://other.example.com/issues/1'}});
+ await ok({action:'operation',owner:'alice',name:'update_feedback',args:{submission_id:feedbackId,status:'planned',reply:'Accepted for investigation',issue_url:'https://github.com/RandomDevelopment/home-assistant-workbench/issues/1'}});
+ const updated=(await ok({action:'operation',owner:'bob',name:'list_feedback',args:{}})).items[0];assert.equal(updated.status,'planned');assert.equal(updated.reply,'Accepted for investigation');
+ const concurrent=await Promise.all(Array.from({length:12},(_,n)=>call({action:'operation',owner:'rate-user',name:'submit_feedback',args:{...feedbackArgs,submission_id:'33333333-3333-4333-8333-'+String(n).padStart(12,'0')}})));
+ assert.equal(concurrent.filter(r=>r.status===200).length,10);checks++;
+ assert.equal((await ok({action:'operation',owner:'rate-user',name:'list_feedback',args:{}})).items.length,10);
+ assert.equal((await ok({action:'operation',owner:'bob',name:'submit_feedback',args:feedbackArgs})).duplicate,true);
+ await bad({action:'operation',owner:'alice',name:'delete_feedback',args:{submission_id:feedbackId}});
+ await bad({action:'operation',owner:'bob',name:'purge_expired_feedback',args:{}});
+ await ok({action:'operation',owner:'bob',name:'delete_feedback',args:{submission_id:feedbackId}});
+ assert.equal((await ok({action:'operation',owner:'bob',name:'list_feedback',args:{}})).items.length,0);
+ await ok({action:'sql',sql:'INSERT INTO feedback (id,owner,kind,title,details,created_at,updated_at) VALUES (?,?,?,?,?,?,?)',bind:['old','bob','bug','Old','Expired',Date.now()-91*86400000,Date.now()]});
+ assert.equal((await ok({action:'operation',owner:'alice',name:'purge_expired_feedback',args:{}})).deleted,1);
+ assert.equal((await ok({action:'sql',sql:'SELECT count(*) AS count FROM feedback WHERE id=?',bind:['old']})).results[0].count,0);
+ const kept=await ok({action:'operation',owner:'rate-user',name:'list_feedback',args:{}});assert.equal(kept.items.length,10);
+ await ok({action:'sql',sql:'INSERT INTO feedback (id,owner,kind,title,details,created_at,updated_at) VALUES (?,?,?,?,?,?,?)',bind:['old-access','bob','bug','Old','Expired',Date.now()-91*86400000,Date.now()]});
+ assert.equal((await ok({action:'operation',owner:'bob',name:'list_feedback',args:{}})).items.length,0);
+ assert.equal((await ok({action:'sql',sql:'SELECT count(*) AS count FROM feedback WHERE id=?',bind:['old-access']})).results[0].count,0);
+ const tools=await ok({action:'tools'});assert.equal(tools.filter(t=>!['connection_settings','list_installations','submit_feedback','list_feedback','review_feedback','update_feedback','delete_feedback','purge_expired_feedback'].includes(t.name)&&t.inputSchema.required.includes('installation_id')).length,tools.length-8);
+ for(const t of tools)for(const hint of ['readOnlyHint','openWorldHint','destructiveHint'])assert.equal(typeof t.annotations[hint],'boolean');checks++;
+ assert.equal(tools.find(t=>t.name==='submit_feedback').annotations.openWorldHint,false);assert.equal(tools.find(t=>t.name==='prepare_service').annotations.destructiveHint,false);assert.equal(tools.find(t=>t.name==='execute_change').annotations.destructiveHint,true);checks++;
+ console.log('PASS: '+checks+' checks; 12 installations, tenant isolation, credential binding, single-use changes, URL/DNS guards, redaction and explicit tool targets.');
+}finally{await mf.dispose();await rm('.test',{recursive:true,force:true});}
