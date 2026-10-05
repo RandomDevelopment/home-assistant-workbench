@@ -8,6 +8,6 @@ You can connect one installation or many. Credentials belong in the connection m
 
 Public plugin-directory release is being prepared. Until it is approved and published, follow the repository instructions to deploy your own private copy when your account supports the required tools. A public repository does not grant access to the maintainer’s hosted copy.
 
-Source destination: `https://github.com/RandomDevelopment/home-assistant-workbench` (ownership transferred; public visibility pending). Link the final verified repository, support page, privacy policy, terms, and plugin listing after each is actually available.
+Source destination: `https://github.com/RandomDevelopment/home-assistant-workbench` (ownership transferred; full source public). Link the final verified repository, support page, privacy policy, terms, and plugin listing after each is actually available.
 
 Independent project; not affiliated with Home Assistant, HACS, or OpenAI.
