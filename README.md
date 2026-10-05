@@ -18,11 +18,12 @@ Home Assistant Workbench is an independent ChatGPT plugin with a connection mana
 | Troubleshoot an integration | Cross-checks installed versions with documentation, GitHub releases, changelogs, and issues. |
 | Manage several installations | Makes you choose a named home; credentials and permissions stay separate. |
 | Run a specific action | Validates a live Home Assistant service, prepares the action, then executes within your authorization. |
+| Look back in time | Reads recorded history and logbook evidence for a named home and bounded time range. |
 | Report a problem | Saves feedback with a tracking ID, status, and maintainer replies. No GitHub connection needed. |
 
 **It needs a public HTTPS hostname on port 443**, such as a Nabu Casa remote URL. This hosted implementation cannot reach LAN IPs, `.local` names, or a private VPN. It does not configure network exposure for you.
 
-History/logbook queries are [planned in issue #1](https://github.com/RandomDevelopment/home-assistant-workbench/issues/1). Direct YAML/file editing and installing HACS components or add-ons are not implemented. See [security and limits](docs/security-and-limits.md).
+Read-only history and logbook queries are available through the plugin, with explicit entity IDs, time-zone-aware ranges, pagination, and missing-data warnings. See the [history guide](docs/history.md). Direct YAML/file editing and installing HACS components or add-ons are not implemented. See [security and limits](docs/security-and-limits.md).
 
 ## Use it in your own ChatGPT account
 
@@ -101,6 +102,16 @@ Do not change either installation.
 Use Home Assistant Workbench on Home to turn off the basement lights.
 Resolve the exact entities, prepare the action, execute it within this
 explicit authorization, and verify the result. Ask if the target is ambiguous.
+```
+
+**History:**
+
+```text
+Use Home Assistant Workbench on Home to find the last recorded time my phone
+was upstairs during the past six hours. Resolve the exact room sensor and its
+recorded upstairs state, use Home’s time zone, query history, and show the
+queried range and supporting transitions. Explain missing data or retention
+limits. Do not substitute current timestamps or publish household history.
 ```
 
 **Send feedback without GitHub:**
