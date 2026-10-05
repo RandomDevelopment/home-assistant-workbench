@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1791142950254,
+      "tag": "0000_wealthy_doctor_faustus",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1791154364700,
+      "tag": "0001_useful_exodus",
+      "breakpoints": true
+    }
+  ]
+}
