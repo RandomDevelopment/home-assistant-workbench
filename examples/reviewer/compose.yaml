@@ -1,0 +1,19 @@
+services:
+  demo-home:
+    image: ghcr.io/home-assistant/home-assistant:2026.9.4
+    restart: unless-stopped
+    environment:
+      TZ: America/Chicago
+    volumes:
+      - ./demo-home:/config
+    ports:
+      - "127.0.0.1:18123:8123"
+  demo-workshop:
+    image: ghcr.io/home-assistant/home-assistant:2026.9.4
+    restart: unless-stopped
+    environment:
+      TZ: America/Chicago
+    volumes:
+      - ./demo-workshop:/config
+    ports:
+      - "127.0.0.1:18124:8123"

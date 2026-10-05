@@ -1,0 +1,58 @@
+# Sample data only. Use this in dedicated demo installations, never a real home.
+default_config:
+homeassistant:
+  name: Workbench Demo
+  time_zone: America/Chicago
+  latitude: 0
+  longitude: 0
+  elevation: 0
+  unit_system: us_customary
+input_boolean:
+  workbench_demo_lamp:
+    name: Demo Lamp State
+    initial: true
+input_select:
+  workbench_demo_room:
+    name: Demo Phone Room
+    options:
+      - bedroom
+      - upstairs
+      - basement
+    initial: bedroom
+  workbench_excluded_room:
+    name: Recorder Excluded Sample
+    options:
+      - bedroom
+      - upstairs
+    initial: bedroom
+input_number:
+  workbench_demo_revision:
+    name: Demo Observation Revision
+    min: 0
+    max: 100
+    step: 1
+    initial: 0
+template:
+  - sensor:
+      - name: Workbench Demo Phone Room
+        unique_id: workbench_demo_phone_room
+        state: "{{ states('input_select.workbench_demo_room') }}"
+        attributes:
+          sample_revision: "{{ states('input_number.workbench_demo_revision') | int(0) }}"
+  - light:
+      - name: Demo Lamp
+        unique_id: workbench_demo_lamp
+        state: "{{ is_state('input_boolean.workbench_demo_lamp', 'on') }}"
+        turn_on:
+          action: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.workbench_demo_lamp
+        turn_off:
+          action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.workbench_demo_lamp
+recorder:
+  purge_keep_days: 3
+  exclude:
+    entities:
+      - input_select.workbench_excluded_room
