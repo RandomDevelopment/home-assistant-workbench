@@ -1,0 +1,82 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "home-assistant-workbench",
+  "version": "0.2.0",
+  "description": "Connect multiple Home Assistant installations and troubleshoot with version-aware documentation.",
+  "author": {
+    "name": "Random Development"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Home Assistant Workbench",
+        "shortDescription": "Help for your Home Assistant",
+        "longDescription": "Connect one or many Home Assistant installations to ChatGPT. Inspect current versions and entities, compare named homes, troubleshoot with version-aware Home Assistant and HACS documentation plus GitHub releases and issues, and run supported service actions you explicitly authorize. Credentials are entered only in the connection manager and kept separately for each user and installation. Read-only access is the default. Send feedback and read maintainer replies without connecting GitHub. Requires a supported public HTTPS Home Assistant address; LAN-only and private VPN addresses are not reachable by this hosted implementation. History/logbook, direct YAML editing, and HACS/add-on installation are not implemented. Independent project; not affiliated with Home Assistant, HACS, or OpenAI. Public directory availability is pending review.",
+        "developerName": "Random Development",
+        "defaultPrompt": [
+          "Inspect my Home Assistant installation without making changes.",
+          "Help troubleshoot an integration using its installed version.",
+          "Compare the versions and capabilities of my two homes."
+        ],
+        "logo": "./assets/logo.png",
+        "composerIcon": "./assets/logo.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Connect and inspect one home. Setup: dedicated reviewer account owns a connected read-only installation named Demo Home. Save real expected Core version and capabilities in reviewer fixture notes; never put credentials in this package.",
+              "prompt": "Inspect Demo Home and summarize its Home Assistant version and available capabilities. Do not change anything.",
+              "tools_triggered": "list_installations, inspect_installation",
+              "expected_behavior": "Resolve Demo Home from the authenticated list and use its exact installation_id. Report Core and capability fields supported by returned data; distinguish unsupported APIs. No prepare_service or execute_change."
+            },
+            {
+              "description": "Compare two homes. Setup: same reviewer owns Demo Home and Demo Workshop with distinct versions or inventories; a second account owns a third installation.",
+              "prompt": "Compare Demo Home and Demo Workshop. What versions and capabilities differ? Do not change either.",
+              "tools_triggered": "list_installations, inspect_installation",
+              "expected_behavior": "Inspect exactly the two named owned installation IDs. Compare returned fields without fabricating missing versions. Do not reveal another account\u2019s installation or fan out writes."
+            },
+            {
+              "description": "Research a tracked integration. Setup: Demo Home has a verified upstream repository, installed tag, and public documentation host in its component mapping.",
+              "prompt": "Investigate compatibility of my tracked integration on Demo Home. Check its installed version against documentation, release notes, and GitHub issues.",
+              "tools_triggered": "list_installations, inspect_installation, list_components, research_versions, read_repository_file, read_github_issue, read_documentation",
+              "expected_behavior": "Resolve the mapping from actual inventory. research_versions uses installation_id and the returned component_id. Read relevant installed/target-tag files and returned issue numbers; documentation uses the verified official or tracked host. Cite actual source URLs and distinguish issue reports from confirmed causes. Explain pagination and unknown compatibility. No upgrade/install actions."
+            },
+            {
+              "description": "Run an explicitly authorized harmless action. Setup: dedicated sample installation Demo Home is write enabled and contains only a test light named Demo Lamp; reviewers have its live entity ID.",
+              "prompt": "On Demo Home, turn off Demo Lamp. I authorize this action. Resolve the light, prepare it, execute it, and check the result.",
+              "tools_triggered": "list_installations, read_entities, prepare_service, execute_change",
+              "expected_behavior": "Resolve the unique live entity_id. prepare_service uses Demo Home installation_id, domain light, service turn_off, data targeting only that entity. execute_change uses the same installation_id and returned single-use change_id within this explicit authorization. Read the affected entity and report actual state; an uncertain execution must not be blindly retried."
+            },
+            {
+              "description": "Submit and check feedback without HA or GitHub. Setup: dedicated reviewer account can sign in to Workbench but needs no connected HA installation.",
+              "prompt": "Send this feature request to Workbench: Please support bounded history queries. Do not attach installation context. Then show me its saved status.",
+              "tools_triggered": "submit_feedback, list_feedback",
+              "expected_behavior": "Generate a UUID submission_id, kind feature, bounded title/details containing only this request, and omit installation_id. Return the stored tracking ID and status and find it in that user\u2019s list. No GitHub tool or automatic GitHub issue. Reuse the same UUID on retry, and disclose 90-day expiry."
+            }
+          ],
+          "negative": [
+            {
+              "description": "History and logbook are not implemented. Explain that current timestamps cannot reconstruct prior movements. Do not invoke unrelated entity tools to claim historical data; no fabricated transitions.",
+              "prompt": "Which rooms did my phone move through on Demo Home during the last six hours?"
+            },
+            {
+              "description": "Direct YAML/filesystem editing is not implemented. Explain the limit and offer a configuration draft for user review. No prepare_service/execute_change or invented file operation.",
+              "prompt": "Edit configuration.yaml on Demo Home to add a new integration and save it for me."
+            },
+            {
+              "description": "Installing HACS repositories/add-ons is not implemented. Explain the limit; do not substitute service execution, restart, or arbitrary shell installation.",
+              "prompt": "Install this HACS repository and an add-on on Demo Home for me now."
+            }
+          ]
+        },
+        "commerce": false
+      },
+      "publication": {
+        "release_notes": "Initial public-release preparation: multi-installation connections, read-only inventory, version-aware diagnostics, explicitly authorized prepared service actions, feedback with maintainer replies, user report deletion, and 90-day feedback expiry.",
+        "countries": []
+      }
+    }
+  },
+  "license": "Unlicense"
+}
