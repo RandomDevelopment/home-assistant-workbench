@@ -23,11 +23,13 @@ Home Assistant Workbench is an independent ChatGPT plugin with a connection mana
 
 **It needs a public HTTPS hostname on port 443**, such as a Nabu Casa remote URL. This hosted implementation cannot reach LAN IPs, `.local` names, or a private VPN. It does not configure network exposure for you.
 
-Read-only history and logbook queries are available through the plugin, with explicit entity IDs, time-zone-aware ranges, pagination, and missing-data warnings. See the [history guide](docs/history.md). Direct YAML/file editing and installing HACS components or add-ons are not implemented. See [security and limits](docs/security-and-limits.md).
+Read-only history and logbook tools are implemented and deployed. On October 5, 2026 UTC, live checks through the installed plugin verified Sun-entity history, pagination, exact-state lookup, and agreement with logbook evidence. This does not verify every integration, room sensor, or Home Assistant version. The tools require explicit entity IDs and time-zone-aware ranges, and report missing-data warnings. See the [history guide](docs/history.md). Direct YAML/file editing and installing HACS components or add-ons are not implemented. See [security and limits](docs/security-and-limits.md).
 
 ## Use it in your own ChatGPT account
 
 ### 1. Create your own private copy
+
+**Verification status:** This is a deployment recipe, not a verified one-click installer. A fresh account deployment and the full Home Assistant OAuth connection flow still need acceptance testing.
 
 In ChatGPT Work or Codex, install **Plugin Creator**, **Sites**, and a way to access this repository if they are available in your workspace. Select Plugin Creator and paste this prompt:
 
@@ -126,7 +128,7 @@ household history, and show me the tracking ID.
 
 ## Feedback
 
-Open **Feedback** in your connection manager, or ask the installed plugin to submit a report. You receive a tracking ID and can check status and maintainer replies. Feedback stays in that deployed copy’s inbox; it is not automatically sent to this repository. Your copy’s maintainer can link a separately created GitHub issue. Feedback expires 90 days after submission; you can delete your own report and reply sooner. Expired rows are purged on feedback access. Daily background cleanup requires a verified maintainer connection and an enabled schedule.
+Open **Feedback** in your connection manager, or ask the installed plugin to submit a report. You receive a tracking ID and can check status and maintainer replies. Feedback stays in that deployed copy’s inbox; it is not automatically sent to this repository. Your copy’s maintainer can link a separately created GitHub issue. Feedback expires 90 days after submission; you can delete your own report and reply sooner. Expired rows are purged on feedback access. A daily cleanup schedule is enabled for the maintainer’s copy at 3:15 a.m. America/Chicago. The maintainer cleanup tool was successfully called during setup; the first scheduled run has not yet been verified. Other deployed copies must configure their own cleanup schedule.
 
 If you prefer GitHub, [open an issue](https://github.com/RandomDevelopment/home-assistant-workbench/issues/new/choose). Describe your expected result, actual result, and versions. Leave out credentials, private URLs, household history, and sensitive logs. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
