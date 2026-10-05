@@ -4,7 +4,7 @@
   "version": "0.2.0",
   "description": "Connect multiple Home Assistant installations and troubleshoot with version-aware documentation.",
   "author": {
-    "name": "Random Development"
+    "name": "Random Development LLC"
   },
   "extensions": {
     "com.openai": {
@@ -12,7 +12,7 @@
         "displayName": "Home Assistant Workbench",
         "shortDescription": "Help for your Home Assistant",
         "longDescription": "Connect one or many Home Assistant installations to ChatGPT. Inspect current versions and entities, compare named homes, troubleshoot with version-aware Home Assistant and HACS documentation plus GitHub releases and issues, and run supported service actions you explicitly authorize. Credentials are entered only in the connection manager and kept separately for each user and installation. Read-only access is the default. Send feedback and read maintainer replies without connecting GitHub. Requires a supported public HTTPS Home Assistant address; LAN-only and private VPN addresses are not reachable by this hosted implementation. Read bounded recorder history and logbook evidence with explicit entity IDs, time-zone context, pagination, and missing-data warnings. Direct YAML editing and HACS/add-on installation are not implemented. Independent project; not affiliated with Home Assistant, HACS, or OpenAI. Public directory availability is pending review.",
-        "developerName": "Random Development",
+        "developerName": "Random Development LLC",
         "defaultPrompt": [
           "Inspect my Home Assistant installation without making changes.",
           "Help troubleshoot an integration using its installed version.",
