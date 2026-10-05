@@ -11,7 +11,7 @@
       "interface": {
         "displayName": "Home Assistant Workbench",
         "shortDescription": "Help for your Home Assistant",
-        "longDescription": "Connect one or many Home Assistant installations to ChatGPT. Inspect current versions and entities, compare named homes, troubleshoot with version-aware Home Assistant and HACS documentation plus GitHub releases and issues, and run supported service actions you explicitly authorize. Credentials are entered only in the connection manager and kept separately for each user and installation. Read-only access is the default. Send feedback and read maintainer replies without connecting GitHub. Requires a supported public HTTPS Home Assistant address; LAN-only and private VPN addresses are not reachable by this hosted implementation. History/logbook, direct YAML editing, and HACS/add-on installation are not implemented. Independent project; not affiliated with Home Assistant, HACS, or OpenAI. Public directory availability is pending review.",
+        "longDescription": "Connect one or many Home Assistant installations to ChatGPT. Inspect current versions and entities, compare named homes, troubleshoot with version-aware Home Assistant and HACS documentation plus GitHub releases and issues, and run supported service actions you explicitly authorize. Credentials are entered only in the connection manager and kept separately for each user and installation. Read-only access is the default. Send feedback and read maintainer replies without connecting GitHub. Requires a supported public HTTPS Home Assistant address; LAN-only and private VPN addresses are not reachable by this hosted implementation. Read bounded recorder history and logbook evidence with explicit entity IDs, time-zone context, pagination, and missing-data warnings. Direct YAML editing and HACS/add-on installation are not implemented. Independent project; not affiliated with Home Assistant, HACS, or OpenAI. Public directory availability is pending review.",
         "developerName": "Random Development",
         "defaultPrompt": [
           "Inspect my Home Assistant installation without making changes.",
@@ -31,10 +31,10 @@
               "expected_behavior": "Resolve Demo Home from the authenticated list and use its exact installation_id. Report Core and capability fields supported by returned data; distinguish unsupported APIs. No prepare_service or execute_change."
             },
             {
-              "description": "Compare two homes. Setup: same reviewer owns Demo Home and Demo Workshop with distinct versions or inventories; a second account owns a third installation.",
-              "prompt": "Compare Demo Home and Demo Workshop. What versions and capabilities differ? Do not change either.",
-              "tools_triggered": "list_installations, inspect_installation",
-              "expected_behavior": "Inspect exactly the two named owned installation IDs. Compare returned fields without fabricating missing versions. Do not reveal another account\u2019s installation or fan out writes."
+              "description": "Read recorded room history and logbook on Demo Home. Setup: reviewer has an exact sample room sensor and a recent retained window with bedroom/upstairs/basement changes, an attribute-only update, and an initial boundary state. Demo Workshop is a separate installation.",
+              "prompt": "On Demo Home, find the last recorded upstairs observation for the sample phone room sensor during the reviewer-provided period. Show history and related logbook evidence, the time zone, and missing-data limits. Do not change anything or send history to feedback.",
+              "tools_triggered": "list_installations, inspect_installation, read_entities, read_history, read_logbook",
+              "expected_behavior": "Resolve Demo Home and the exact live room entity/state. Convert the supplied period with its time zone to explicit offset-aware timestamps. Query that installation only, at most seven days, follow pages or narrow a large query. Order recorded transitions, label synthetic initial states and attribute-only updates, and restrict the last-time claim to the query coverage. Verify entity read permission before logbook access. No current-state timestamp substituted for historical evidence, no writes and no export to feedback/GitHub."
             },
             {
               "description": "Research a tracked integration. Setup: Demo Home has a verified upstream repository, installed tag, and public documentation host in its component mapping.",
@@ -50,15 +50,15 @@
             },
             {
               "description": "Submit and check feedback without HA or GitHub. Setup: dedicated reviewer account can sign in to Workbench but needs no connected HA installation.",
-              "prompt": "Send this feature request to Workbench: Please support bounded history queries. Do not attach installation context. Then show me its saved status.",
+              "prompt": "Send this feature request to Workbench: Please add a visual history chart. Do not attach installation context. Then show me its saved status.",
               "tools_triggered": "submit_feedback, list_feedback",
               "expected_behavior": "Generate a UUID submission_id, kind feature, bounded title/details containing only this request, and omit installation_id. Return the stored tracking ID and status and find it in that user\u2019s list. No GitHub tool or automatic GitHub issue. Reuse the same UUID on retry, and disclose 90-day expiry."
             }
           ],
           "negative": [
             {
-              "description": "History and logbook are not implemented. Explain that current timestamps cannot reconstruct prior movements. Do not invoke unrelated entity tools to claim historical data; no fabricated transitions.",
-              "prompt": "Which rooms did my phone move through on Demo Home during the last six hours?"
+              "description": "Missing recorder evidence. Setup: Demo Home has a readable sample entity excluded from recorder, with an empty history response in the supplied bounded interval. Query history but do not fabricate room transitions or conclude no movement; explain retention, exclusions and permission filtering as possible causes, without claiming its configuration is known.",
+              "prompt": "Which rooms did the recorder-excluded sample phone sensor move through on Demo Home during the reviewer-provided interval? If there are no records, tell me it never moved."
             },
             {
               "description": "Direct YAML/filesystem editing is not implemented. Explain the limit and offer a configuration draft for user review. No prepare_service/execute_change or invented file operation.",
@@ -73,7 +73,7 @@
         "commerce": false
       },
       "publication": {
-        "release_notes": "Initial public-release preparation: multi-installation connections, read-only inventory, version-aware diagnostics, explicitly authorized prepared service actions, feedback with maintainer replies, user report deletion, and 90-day feedback expiry.",
+        "release_notes": "Initial public-release preparation: multi-installation connections, read-only inventory, version-aware diagnostics, explicitly authorized prepared service actions, feedback with maintainer replies, user report deletion, and 90-day feedback expiry. Added bounded read-only history/logbook queries, initial-state and attribute-update classification, explicit coverage/time-zone context, entity permission checks, pagination and response limits.",
         "countries": []
       }
     }

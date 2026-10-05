@@ -11,7 +11,8 @@ The chosen publisher is **Random Development** (business verification not yet ch
 - A square PNG icon, 1254 × 1254 pixels, under 5 MiB, in `assets/logo.png`.
 - The canonical existing MCP URL, copied from the hosting service, in `mcp.json`.
 - [Demo recording instructions](walkthrough.md) and [policy drafts](policies/). They are drafts, not published legal pages or a completed recording.
-- Local implementation checks: 96 D1/security checks and TypeScript checking passed after feedback expiry and deletion were added. These checks do not replace portal review cases.
+- Public support uses GitHub issues, as selected by the publisher; `docs/support.md` explains public reports and private in-plugin feedback. A private data-rights contact remains unresolved.
+- Local implementation checks: 96 D1/security checks, 67 history/logbook checks, and TypeScript checking passed. History tests exercise the authenticated REST client with sample responses, including permissions, room transitions, attribute-only updates, pagination, missing data, and response limits. They do not establish live household compatibility or replace portal review cases.
 
 ## Next preparation items
 
