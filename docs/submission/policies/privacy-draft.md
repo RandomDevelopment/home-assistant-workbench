@@ -4,12 +4,9 @@
 
 ## Publisher and contact
 
-Random Development LLC  
-917 W 7th Ave  
-Kearney, MO 64060  
-United States
+Random Development LLC
 
-For private security or data-deletion requests: **services@randomdevelopment.biz**. Public support uses [GitHub issues](https://github.com/RandomDevelopment/home-assistant-workbench/issues). The publisher confirmed this legal name and its normal mailing address for these release materials.
+For private security or data-deletion requests: **services@randomdevelopment.biz**. Public support uses [GitHub issues](https://github.com/RandomDevelopment/home-assistant-workbench/issues). The publisher confirmed this legal name for these release materials.
 
 ## What Workbench processes
 
@@ -45,4 +42,4 @@ You can select which installation to use, keep read-only mode, omit installation
 
 ## Before publication
 
-Confirm purposes and legal bases where required, international processing arrangements, applicable rights/contact procedures, children’s eligibility/attestation, platform retention, and all outstanding retention/sharing decisions. Publisher identity verification in the submission portal is separate from the confirmed name and mailing address above. Do not publish this unresolved draft as an effective policy.
+Confirm purposes and legal bases where required, international processing arrangements, applicable rights/contact procedures, children’s eligibility/attestation, platform retention, and all outstanding retention/sharing decisions. Publisher identity verification in the submission portal is separate from the confirmed publisher name above. Do not publish this unresolved draft as an effective policy.

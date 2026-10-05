@@ -4,10 +4,7 @@
 
 ## Publisher and contact
 
-Random Development LLC  
-917 W 7th Ave  
-Kearney, MO 64060  
-United States
+Random Development LLC
 
 For private security or data-deletion requests: **services@randomdevelopment.biz**. Public support uses [GitHub issues](https://github.com/RandomDevelopment/home-assistant-workbench/issues).
 
