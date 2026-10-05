@@ -20,7 +20,7 @@
 Use Node >=22.13 and the package-manager version in `package.json`.
 
 ```bash
-git clone https://github.com/Nickfost/home-assistant-workbench.git
+git clone https://github.com/RandomDevelopment/home-assistant-workbench.git
 cd home-assistant-workbench
 corepack pnpm install --frozen-lockfile
 node node_modules/typescript/bin/tsc --noEmit
@@ -54,3 +54,11 @@ No HA tokens or GitHub tokens belong in source. Encryption-key rotation without 
 - [WebSocket API](https://developers.home-assistant.io/docs/api/websocket/)
 - [HACS data sources](https://www.hacs.dev/docs/faq/data_sources/)
 - [OpenAI plugin guidance](https://learn.chatgpt.com/docs/plugins)
+
+## GitHub hosting versus the backend
+
+Use GitHub to maintain, review, and distribute the source. GitHub Pages can host the public project guide and finalized support/privacy/terms pages because it serves static HTML, CSS, and JavaScript. It cannot run this MCP server, the credential encryption service, or D1 persistence.
+
+The current backend remains on ChatGPT Sites and uses its trusted sign-in identity. A future standalone Cloudflare Workers/D1 deployment could use GitHub Actions for deployment, but it must first implement and verify its own authentication/OAuth boundary. Do not deploy the current worker to arbitrary hosting and trust client-supplied identity headers. Public directory submission of the existing Sites-owned App is a separate ownership/authentication requirement.
+
+References: [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), [Cloudflare Workers with GitHub Actions](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/), [D1](https://developers.cloudflare.com/d1/get-started/).
