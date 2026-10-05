@@ -1,6 +1,15 @@
 # Home Assistant Workbench terms — draft
 
-**For Random Development’s review. Not published or effective.** Legal identity/address, effective date, governing law, dispute terms, eligibility, availability, termination, liability, and support commitments must be decided by the authorized publisher before public release.
+**For Random Development LLC’s review. Not published or effective.** Effective date, governing law, dispute terms, eligibility, availability, termination, liability, and support commitments must be decided by the authorized publisher before public release.
+
+## Publisher and contact
+
+Random Development LLC  
+917 W 7th Ave  
+Kearney, MO 64060  
+United States
+
+For private security or data-deletion requests: **services@randomdevelopment.biz**. Public support uses [GitHub issues](https://github.com/RandomDevelopment/home-assistant-workbench/issues).
 
 ## What the service does
 

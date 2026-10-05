@@ -1,6 +1,15 @@
 # Home Assistant Workbench privacy policy — draft
 
-**For publisher review. Not published, not effective, and not a verified privacy-policy URL.** Random Development is the intended publisher. Effective date, legal entity/address, jurisdiction, platform retention, backup deletion, and the contact process still need confirmation before this draft is published.
+**For publisher review. Not published, not effective, and not a verified privacy-policy URL.** The confirmed publisher is Random Development LLC. Effective date, jurisdiction, platform retention, backup deletion, and the remaining policy decisions still need confirmation before this draft is published.
+
+## Publisher and contact
+
+Random Development LLC  
+917 W 7th Ave  
+Kearney, MO 64060  
+United States
+
+For private security or data-deletion requests: **services@randomdevelopment.biz**. Public support uses [GitHub issues](https://github.com/RandomDevelopment/home-assistant-workbench/issues). The publisher confirmed this legal name and its normal mailing address for these release materials.
 
 ## What Workbench processes
 
@@ -36,4 +45,4 @@ You can select which installation to use, keep read-only mode, omit installation
 
 ## Before publication
 
-Confirm the publisher’s legal identity and address, purposes and legal bases where required, international processing arrangements, applicable rights/contact procedures, children’s eligibility/attestation, platform retention, and all outstanding retention/sharing decisions. Do not publish this unresolved draft as an effective policy.
+Confirm purposes and legal bases where required, international processing arrangements, applicable rights/contact procedures, children’s eligibility/attestation, platform retention, and all outstanding retention/sharing decisions. Publisher identity verification in the submission portal is separate from the confirmed name and mailing address above. Do not publish this unresolved draft as an effective policy.
