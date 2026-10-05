@@ -11,12 +11,12 @@ The chosen publisher is **Random Development** (business verification not yet ch
 - A square PNG icon, 1254 × 1254 pixels, under 5 MiB, in `assets/logo.png`.
 - The canonical existing MCP URL, copied from the hosting service, in `mcp.json`.
 - [Demo recording instructions](walkthrough.md) and [policy drafts](policies/). They are drafts, not published legal pages or a completed recording.
-- Public support uses GitHub issues, as selected by the publisher; `docs/support.md` explains public reports and private in-plugin feedback. A private data-rights contact remains unresolved.
+- Public support uses GitHub issues, as selected by the publisher; `docs/support.md` explains public reports and private in-plugin feedback. The publisher confirmed `services@randomdevelopment.biz` for private security/data-deletion requests; response commitments and the remaining policy decisions are not finalized.
 - Local implementation checks: 96 D1/security checks, 67 history/logbook checks, and TypeScript checking passed. History tests exercise the authenticated REST client with sample responses, including permissions, room transitions, attribute-only updates, pagination, missing data, and response limits. They do not establish live household compatibility or replace portal review cases.
 
 ## Next preparation items
 
-1. Review the policy drafts and resolve the listed business decisions, then publish actual website, support, privacy, and terms pages. Verify all four are accessible without private sign-in and identify Random Development and Workbench. Add their real HTTPS URLs to `extensions.com.openai.interface`; they are deliberately absent now.
+1. Review the policy drafts and resolve the listed business decisions, then publish actual website, support, privacy, and terms pages. Verify all four are accessible without private sign-in and identify Random Development and Workbench. The public repository and support guide are recorded in `websiteURL` and `supportURL`. Finalize and verify the effective privacy and terms pages before adding their URLs to `extensions.com.openai.interface`.
 2. Create a dedicated sample Home Assistant setup and reviewer account. Use secure portal credential fields only. Never use the maintainer’s real household, tokens, account ID, or private device history as public evidence.
 3. Record and host the real walkthrough, verify playback, and add `review.demo_recording_url`. No recording has been made yet.
 4. Resolve the submission path for the **existing Sites-owned App**. Plugin Creator’s export endpoint returned: “This is an app-backed plugin and cannot be edited with Plugin Creator.” Do not use an account-upload wrapper to create a duplicate private plugin. The metadata here is a preparation copy, not an ownership migration.
@@ -25,7 +25,7 @@ The chosen publisher is **Random Development** (business verification not yet ch
 
 ## Packaging status
 
-This directory is **not a submission-ready ZIP**. It intentionally omits four unverified listing URLs and the demo URL. Category must be chosen from the actual target dashboard. MCP discovery and auth for a public reviewer must be verified for the exact canonical App. Do not replace its existing binding or audience merely to produce an archive.
+This directory is **not a submission-ready ZIP**. The public repository and support guide populate the website/support URLs. It still intentionally omits effective privacy/terms URLs and the demo URL. Category must be chosen from the actual target dashboard. MCP discovery and auth for a public reviewer must be verified for the exact canonical App. Do not replace its existing binding or audience merely to produce an archive.
 
 ## Feedback retention
 

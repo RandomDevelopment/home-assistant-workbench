@@ -19,7 +19,9 @@
           "Compare the versions and capabilities of my two homes."
         ],
         "logo": "./assets/logo.png",
-        "composerIcon": "./assets/logo.png"
+        "composerIcon": "./assets/logo.png",
+        "websiteURL": "https://github.com/RandomDevelopment/home-assistant-workbench",
+        "supportURL": "https://github.com/RandomDevelopment/home-assistant-workbench/blob/main/docs/support.md"
       },
       "review": {
         "test_cases": {
