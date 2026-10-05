@@ -24,7 +24,7 @@ The app uses these records to connect to your selected installation, provide dia
 
 Workbench is hosted through ChatGPT Sites on infrastructure managed by OpenAI and its hosting providers. ChatGPT receives the tool results you request. Your Home Assistant receives the API requests for that installation. GitHub and documentation hosts receive research requests. No advertising SDK, payment flow, or separate analytics integration has been added to Workbench’s source. The hosting platform may maintain access logs, usage analytics, backups, and security records under its own terms and retention arrangements; those details must be confirmed for the public release.
 
-User feedback is visible to the submitter and the configured maintainer. It is not automatically posted to GitHub. The maintainer can link an existing public issue, but copying report details into that issue is a separate disclosure requiring review of the user’s consent and content. **Publisher decision still needed: define whether and how anonymized feedback may be published.**
+User feedback is visible to the submitter and the configured maintainer. It is not automatically posted to GitHub. The maintainer can link an existing public issue, but copying report details into that issue is a separate disclosure requiring review of the user’s consent and content. Feedback stays private unless the submitter explicitly permits copying specified content into a public GitHub issue. The publisher selected this consent-first policy; permission to submit feedback is not permission to publish it.
 
 ## Retention and deletion
 
@@ -32,13 +32,13 @@ Installation credentials and saved settings remain until you disconnect or remov
 
 Feedback expires 90 days after it was submitted. Replies and status changes do not reset that deadline. Users can delete their own report and its reply through Feedback or an explicitly requested deletion in ChatGPT. Expired feedback is purged during the next feedback operation. A daily cleanup task is enabled at 3:15 a.m. America/Chicago. Its authenticated maintainer tool passed a manual setup check; the first scheduled run is not yet verified. Scheduled cleanup depends on the connected task succeeding, so this draft does not guarantee a precise physical-deletion deadline.
 
-Expired OAuth states and action drafts cannot be used after their execution deadline, but physical row cleanup and platform backups have separate retention questions. **Publisher decisions still needed: physical cleanup of unused states/drafts, support-email retention, platform logs/backups, account-wide deletion process, and response timing.** Deleting app records does not delete a ChatGPT conversation, a separate GitHub issue, or records maintained by Home Assistant or infrastructure providers.
+Expired OAuth states and action drafts cannot be used after their execution deadline, but physical row cleanup and platform backups have separate retention questions. The publisher selected retention of resolved support emails for one year after resolution, except records that must be retained for legal obligations. No fixed support-response target is advertised. **Publisher decisions still needed: physical cleanup of unused states/drafts, platform logs/backups, and the account-wide deletion process.** Deleting app records does not delete a ChatGPT conversation, a separate GitHub issue, or records maintained by Home Assistant or infrastructure providers.
 
 ## Security and your choices
 
 Credentials are encrypted before database storage and bound to a user and installation. Reads are scoped to the signed-in user. Changes are disabled by default and need the selected installation’s write setting plus the user’s authorization. Do not enter tokens or passwords in chat; use the connection manager. The operator controls hosting and its runtime secrets, so encryption is not a claim that the operator can never access credentials.
 
-You can select which installation to use, keep read-only mode, omit installation context from feedback, disconnect, remove installations, and delete your own feedback. Public support uses GitHub issues. For private security or data-deletion requests, the publisher confirmed **services@randomdevelopment.biz**. Handling and response commitments still need publisher review before this policy is effective.
+You can select which installation to use, keep read-only mode, omit installation context from feedback, disconnect, remove installations, and delete your own feedback. Public support uses GitHub issues. For private security or data-deletion requests, the publisher confirmed **services@randomdevelopment.biz**. No fixed support-response deadline is promised. The remaining rights and account-wide deletion procedures need publisher review before this policy is effective.
 
 ## Before publication
 
