@@ -6,7 +6,7 @@
 
 Home Assistant Workbench connects installations you are authorized to access to ChatGPT. It can read current information, research versions and compatibility, and run supported Home Assistant service actions you explicitly authorize. Multiple installations use separate connection records. Feedback is available without a GitHub connection. The plugin does not involve payments or purchases; your own ChatGPT, hosting, Home Assistant remote-access, and third-party service arrangements may have separate costs and terms.
 
-History/logbook queries, direct YAML/file editing, and HACS/add-on installation are not currently supported. Research results may be incomplete, outdated, or describe another installed version. Review cited evidence and proposed changes. The service requires a supported publicly reachable HTTPS endpoint; it does not configure network exposure for you.
+Read-only history and logbook queries require exact entities and a bounded time range. Recorder retention, exclusions, and permissions can leave gaps; an empty result does not prove that nothing happened. Direct YAML/file editing and HACS/add-on installation are not currently supported. Research results may be incomplete, outdated, or describe another installed version. Review cited evidence and proposed changes. The service requires a supported publicly reachable HTTPS endpoint; it does not configure network exposure for you.
 
 ## Your use
 

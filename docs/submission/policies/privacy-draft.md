@@ -6,7 +6,9 @@
 
 Workbench associates stored records with the trusted account identifier supplied by its ChatGPT-hosted sign-in service. It stores each installation’s chosen name, HTTPS URL, access mode, notes, encrypted Home Assistant authorization tokens, latest version/capability snapshot, and any component repository/version mappings you save. OAuth uses short-lived authorization-state records. Prepared actions are stored with a single-use identifier and a ten-minute execution deadline.
 
-The current inventory snapshot stores Core version, time zone, unit system, components, available integration manifests, Supervisor/add-on information when available, and update entities. Workbench reads entity state, registries, configuration entries, or a bounded error-log excerpt when the requested tool needs them. Returned Home Assistant information can include private household or device information and is sent back into your ChatGPT conversation.
+The current inventory snapshot stores Core version, time zone, unit system, components, available integration manifests, Supervisor/add-on information when available, and update entities. Workbench reads entity state, bounded recorder history and logbook evidence, registries, configuration entries, or a bounded error-log excerpt when the requested tool needs them. Returned Home Assistant information can include private household or device information and is sent back into your ChatGPT conversation.
+
+History/logbook results are returned to the requesting ChatGPT conversation and are not saved in Workbench inventory snapshots or automatically attached to feedback. They can include private room/location observations. ChatGPT and Home Assistant maintain their own retention rules.
 
 Feedback stores the text you submit, its tracking ID, status, dates, and maintainer replies. Installation context is optional and includes only that installation’s ID and known Core version. Logs and credentials are not attached automatically. Free text may still contain personal information; do not include secrets, addresses, or household history. Common credential patterns are redacted as a safeguard, not a guarantee.
 
@@ -30,7 +32,7 @@ Expired OAuth states and action drafts cannot be used after their execution dead
 
 Credentials are encrypted before database storage and bound to a user and installation. Reads are scoped to the signed-in user. Changes are disabled by default and need the selected installation’s write setting plus the user’s authorization. Do not enter tokens or passwords in chat; use the connection manager. The operator controls hosting and its runtime secrets, so encryption is not a claim that the operator can never access credentials.
 
-You can select which installation to use, keep read-only mode, omit installation context from feedback, disconnect, remove installations, and delete your own feedback. Contact the publisher using the published support page for access/deletion questions. **Draft contact: services@randomdevelopment.biz, pending confirmation of the support and rights-request process.**
+You can select which installation to use, keep read-only mode, omit installation context from feedback, disconnect, remove installations, and delete your own feedback. Public support uses GitHub issues. For private security or data-deletion requests, the publisher confirmed **services@randomdevelopment.biz**. Handling and response commitments still need publisher review before this policy is effective.
 
 ## Before publication
 

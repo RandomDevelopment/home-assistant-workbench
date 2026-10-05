@@ -8,4 +8,4 @@ Include the task you tried, expected result, actual result, relevant versions, a
 
 For setup, follow the Getting Started guide and the repository README. To report an issue publicly, use the verified project repository after transfer. Public issue text is visible to everyone. Each separately deployed copy’s feedback stays with that copy’s maintainer.
 
-The publisher’s current contact is **services@randomdevelopment.biz**. Confirm the support inbox and data-rights contact process before publication. No response-time promise has been chosen. Urgent physical-home problems should be handled through your own Home Assistant controls and appropriate local support.
+The publisher selected **GitHub issues** for public support, with the built-in Feedback form for connected users, and confirmed **services@randomdevelopment.biz** for private security or data-deletion requests. The implemented public support document is `docs/support.md`. No response-time promise has been chosen. Urgent physical-home problems should be handled through your own Home Assistant controls and appropriate local support.
